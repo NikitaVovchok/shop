@@ -1,84 +1,110 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop</title>
-
-<link rel="stylesheet" href="style.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Побутова техніка</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header class="header">
+<aside class="sidebar">
     <div class="logo">SHOP</div>
-
-    <input type="text" id="searchInput" placeholder="Пошук товарів...">
-
-    <div class="cart-info">
-        🛒 <span id="count">0</span> | <span id="total">0</span> грн
+    <nav class="nav-menu">
+        <a href="#" class="active" onclick="closeAllModals()">🏠 Каталог</a>
+        <a href="#" onclick="openCheckout()">🛒 Кошик (<span id="cart-count">0</span>)</a>
+        <a href="#" onclick="openWarranty()">⭐ Гарантія</a>
+        <a href="#" onclick="openContacts()">📞 Контакти</a>
+    </nav>
+    
+    <div class="sidebar-footer">
+        <button id="theme-toggle" onclick="toggleTheme()">🌙 Темна тема</button>
     </div>
-</header>
+</aside>
 
-<div class="hero">
-    <h1>🔥 Знижки до -50%</h1>
-    <p>Тільки сьогодні на побутову техніку</p>
-</div>
-
-<div class="filters">
-    <input type="number" id="minPrice" placeholder="Мін ціна">
-    <input type="number" id="maxPrice" placeholder="Макс ціна">
-
-    <select id="ratingFilter">
-        <option value="">Рейтинг</option>
-        <option value="4">4+</option>
-        <option value="5">5</option>
-    </select>
-
-    <select id="sort">
-        <option value="">Сортування</option>
-        <option value="cheap">Дешеві</option>
-        <option value="expensive">Дорогі</option>
-    </select>
-</div>
-
-<h2 class="section-title">Популярні товари</h2>
-
-<div class="container">
-
-    <div id="skeleton" class="catalog"></div>
-    <div id="catalog" class="catalog"></div>
-
-    <div class="cart">
-        <h3>Кошик</h3>
-        <div id="cartItems"></div>
-
-        <div class="total">Разом: <span id="total2">0</span> грн</div>
-
-        <div class="cart-summary">
-            <p>🚚 Доставка: безкоштовно</p>
-            <p>💳 Оплата: при отриманні</p>
+<main class="main-content">
+    <header class="top-bar">
+        <h1>Побутова техніка</h1>
+        <div class="cart-summary" onclick="openCheckout()" style="cursor:pointer;">
+            Разом: <span id="total-price">0</span> ₴
         </div>
+    </header>
 
-        <button onclick="checkout()">Оформити</button>
+    <div id="catalog" class="catalog-grid"></div>
 
-        <h3>❤️ Обране</h3>
-        <div id="wishlist"></div>
+    <div class="copyright">
+        © Гриценко Ілля Юрійович, ДТЕУ, ФЕМП, 4-11, 2026
     </div>
+</main>
 
+<div id="product-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <div class="modal-body" id="modal-details">
+            </div>
+    </div>
 </div>
 
-<div id="modal" class="modal">
-    <div class="modal-content" id="modalContent"></div>
+<div id="checkout-modal" class="modal">
+    <div class="checkout-content">
+        <span class="close-modal" onclick="closeCheckout()">&times;</span>
+        <h2 style="margin-top: 0; color: var(--text-color);">Оформлення замовлення</h2>
+        
+        <div class="checkout-grid">
+            <div class="checkout-items-section">
+                <h3 style="margin-top: 0; margin-bottom: 20px;">Ваші товари:</h3>
+                <div id="checkout-items-list">
+                    </div>
+                <div class="checkout-total">
+                    Разом: <strong id="checkout-total-price">0 ₴</strong>
+                </div>
+            </div>
+
+            <div class="checkout-form-section">
+                <input type="text" id="order-name" placeholder="Ваше Ім'я">
+                <input type="tel" id="order-phone" placeholder="Телефон">
+                <input type="text" id="order-address" placeholder="Адреса доставки">
+                <button class="btn-submit-order" onclick="submitOrder()">🚀 Відправити заявку</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<footer class="footer">
-    © 2026 Shop | Доставка по Україні
-</footer>
+<div id="warranty-modal" class="modal">
+    <div class="modal-content info-modal">
+        <span class="close-modal" onclick="closeWarranty()">&times;</span>
+        <h2 class="modal-title">Гарантія та повернення</h2>
+        <div class="info-content">
+            <p><strong>Офіційна гарантія:</strong> На всі товари з нашого каталогу надається офіційна гарантія від виробника терміном від 12 до 36 місяців.</p>
+            <p><strong>Обмін та повернення:</strong> Відповідно до Закону України «Про захист прав споживачів», ви можете повернути або обміняти товар протягом <strong>14 днів</strong> після покупки.</p>
+            <h4>Умови повернення:</h4>
+            <ul class="spec-list">
+                <li>• Товар не був у використанні і не має слідів експлуатації.</li>
+                <li>• Збережена повна комплектація та цілісність упаковки.</li>
+                <li>• Наявний чек або документ, що підтверджує покупку.</li>
+            </ul>
+            <p class="warning-text">* Зверніть увагу: доставка товару при поверненні оплачується покупцем.</p>
+        </div>
+    </div>
+</div>
 
-<div class="copyright">
-    © Гриценко Ілля Юрійович, ДТЕУ, ФЕМП, 4-11, 2026
+<div id="contacts-modal" class="modal">
+    <div class="modal-content info-modal">
+        <span class="close-modal" onclick="closeContacts()">&times;</span>
+        <h2 class="modal-title">Наші контакти</h2>
+        <div class="info-content">
+            <p>Ми завжди на зв'язку і готові допомогти вам із вибором чи оформленням замовлення!</p>
+            
+            <div class="contact-box">
+                <p>📞 <strong>Телефон:</strong> <a href="tel:+380991234567">+38 (099) 123-45-67</a></p>
+                <p>📧 <strong>Email:</strong> <a href="mailto:support@shop.ua">support@shop.ua</a></p>
+                <p>🕒 <strong>Графік роботи:</strong> Пн-Нд з 09:00 до 20:00</p>
+                <p>📍 <strong>Адреса:</strong> м. Київ, вул. Кіото, 19 (ДТЕУ)</p>
+            </div>
+
+            <button class="btn-submit-order btn-full" onclick="closeContacts()">Зрозуміло</button>
+        </div>
+    </div>
 </div>
 
 <script src="script.js"></script>
