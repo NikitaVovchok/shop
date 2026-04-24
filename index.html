@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop</title>
+
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">SHOP</div>
+
+    <input type="text" id="searchInput" placeholder="Пошук товарів...">
+
+    <div class="cart-info">
+        🛒 <span id="count">0</span> | <span id="total">0</span> грн
+    </div>
+</header>
+
+<div class="hero">
+    <h1>🔥 Знижки до -50%</h1>
+    <p>Тільки сьогодні на побутову техніку</p>
+</div>
+
+<div class="filters">
+    <input type="number" id="minPrice" placeholder="Мін ціна">
+    <input type="number" id="maxPrice" placeholder="Макс ціна">
+
+    <select id="ratingFilter">
+        <option value="">Рейтинг</option>
+        <option value="4">4+</option>
+        <option value="5">5</option>
+    </select>
+
+    <select id="sort">
+        <option value="">Сортування</option>
+        <option value="cheap">Дешеві</option>
+        <option value="expensive">Дорогі</option>
+    </select>
+</div>
+
+<h2 class="section-title">Популярні товари</h2>
+
+<div class="container">
+
+    <div id="skeleton" class="catalog"></div>
+    <div id="catalog" class="catalog"></div>
+
+    <div class="cart">
+        <h3>Кошик</h3>
+        <div id="cartItems"></div>
+
+        <div class="total">Разом: <span id="total2">0</span> грн</div>
+
+        <div class="cart-summary">
+            <p>🚚 Доставка: безкоштовно</p>
+            <p>💳 Оплата: при отриманні</p>
+        </div>
+
+        <button onclick="checkout()">Оформити</button>
+
+        <h3>❤️ Обране</h3>
+        <div id="wishlist"></div>
+    </div>
+
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content" id="modalContent"></div>
+</div>
+
+<footer class="footer">
+    © 2026 Shop | Доставка по Україні
+</footer>
+
+<div class="copyright">
+    © Гриценко Ілля Юрійович, ДТЕУ, ФЕМП, 4-11, 2026
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
